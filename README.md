@@ -1,4 +1,5 @@
-# Project Title
+# Rotten and Hunger
 
 For english read [here](README.en.md).
-Для русского перейдите к [здесь](README.ru.md).
+
+Для русского перейдите [сюда](README.ru.md).
