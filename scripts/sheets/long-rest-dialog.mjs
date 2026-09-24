@@ -1,4 +1,3 @@
-// scripts/sheets/long-rest-dialog.mjs
 import { MODULE_ID, CONSUMABLE_TYPES } from '../constants.mjs';
 
 export function registerLongRestDialogHooks() {
@@ -8,6 +7,8 @@ export function registerLongRestDialogHooks() {
     const actor = app.document ?? app.actor ?? app.object;
     if (!actor || actor.documentName !== 'Actor') return;
     if (root.querySelector('.my-module-rest-section')) return;
+
+    const L = k => game.i18n.localize(`ROTTEN_HUNGER.Rest.${k}`);
 
     const foodItems = actor.items.filter(i =>
       i.type === 'consumable' && i.system.consumableType === CONSUMABLE_TYPES.FOOD
@@ -32,59 +33,35 @@ export function registerLongRestDialogHooks() {
           <label>
             <input type="checkbox" class="my-module-item-check">
             <span class="my-module-item-name">${escapeHtml(item.name)}</span>
-            <span class="my-module-item-avail">${qty} шт × ${weight.toFixed(2)} ф = ${(qty * weight).toFixed(2)} ф</span>
+            <span class="my-module-item-avail">${qty} ${L('PiecesAbbr')} × ${weight.toFixed(2)} ${L('PoundsAbbr')} = ${(qty * weight).toFixed(2)} ${L('PoundsAbbr')}</span>
           </label>
           <input type="number" class="my-module-item-amount"
                  data-kind="${kind}" data-item-id="${item.id}"
                  min="0" step="1" value="0" disabled>
-          <span class="my-module-item-unit">шт</span>
-          <span class="my-module-item-subtotal">0.00 ф</span>
+          <span class="my-module-item-unit">${L('PiecesAbbr')}</span>
+          <span class="my-module-item-subtotal">0.00 ${L('PoundsAbbr')}</span>
         </div>
       `;
     };
 
     section.innerHTML = `
-      <h3>Питание и вода</h3>
+      <h3>${L('SectionTitle')}</h3>
       <div class="my-module-block">
         <div class="my-module-block-header">
-          <strong>Еда</strong> — требуется: ${reqFood} ф. | Выбрано: <span class="my-module-total-food">0.00</span> ф.
+          <strong>${L('Food')}</strong> — ${L('Required')}: ${reqFood} ${L('PoundsAbbr')}. | ${L('Selected')}: <span class="my-module-total-food">0.00</span> ${L('PoundsAbbr')}.
         </div>
-        ${foodItems.length ? foodItems.map(i => renderRow(i, 'food')).join('') : '<em>Нет еды в инвентаре</em>'}
+        ${foodItems.length ? foodItems.map(i => renderRow(i, 'food')).join('') : `<em>${L('NoFood')}</em>`}
       </div>
       <div class="my-module-block">
         <div class="my-module-block-header">
-          <strong>Вода</strong> — требуется: ${reqWater} ф. | Выбрано: <span class="my-module-total-water">0.00</span> ф.
+          <strong>${L('Water')}</strong> — ${L('Required')}: ${reqWater} ${L('PoundsAbbr')}. | ${L('Selected')}: <span class="my-module-total-water">0.00</span> ${L('PoundsAbbr')}.
         </div>
-        ${drinkItems.length ? drinkItems.map(i => renderRow(i, 'drink')).join('') : '<em>Нет напитков в инвентаре</em>'}
+        ${drinkItems.length ? drinkItems.map(i => renderRow(i, 'drink')).join('') : `<em>${L('NoDrinks')}</em>`}
       </div>
     `;
 
     const form = root.querySelector('form') ?? root;
     form.appendChild(section);
-
-    // --- вспомогательные функции ---
-
-    const readForm = () => {
-      const foodConsumed = [];
-      const waterConsumed = [];
-      section.querySelectorAll('.my-module-item-row').forEach(row => {
-        const check = row.querySelector('.my-module-item-check');
-        if (!check.checked) return;
-        const input = row.querySelector('.my-module-item-amount');
-        const qty = Math.max(0, Math.floor(Number(input.value) || 0));
-        if (qty <= 0) return;
-        const weight = Number(row.dataset.weight) || 1;
-        const entry = { itemId: input.dataset.itemId, qty, weight };
-        if (input.dataset.kind === 'food') foodConsumed.push(entry);
-        else waterConsumed.push(entry);
-      });
-      return {
-        foodConsumed,
-        waterConsumed,
-        ate: foodConsumed.length > 0,
-        drank: waterConsumed.length > 0
-      };
-    };
 
     const recompute = () => {
       let totalFood = 0, totalWater = 0;
@@ -96,17 +73,15 @@ export function registerLongRestDialogHooks() {
         if (!check.checked) {
           input.disabled = true;
           input.value = '0';
-          subtotalEl.textContent = '0.00 ф';
+          subtotalEl.textContent = `0.00 ${L('PoundsAbbr')}`;
           return;
         }
-
         input.disabled = false;
         const weight = Number(row.dataset.weight) || 1;
         const qty = Math.max(0, Math.floor(Number(input.value) || 0));
         input.value = String(qty);
         const subtotal = qty * weight;
-        subtotalEl.textContent = `${subtotal.toFixed(2)} ф`;
-
+        subtotalEl.textContent = `${subtotal.toFixed(2)} ${L('PoundsAbbr')}`;
         if (input.dataset.kind === 'food') totalFood += subtotal;
         else totalWater += subtotal;
       });
@@ -114,23 +89,41 @@ export function registerLongRestDialogHooks() {
       section.querySelector('.my-module-total-water').textContent = totalWater.toFixed(2);
     };
 
-    const savePending = () => {
-      const data = readForm();
-      if (!data.foodConsumed.length && !data.waterConsumed.length) {
+    const saveData = () => {
+      const foodConsumed = [];
+      const waterConsumed = [];
+
+      section.querySelectorAll('.my-module-item-row').forEach(row => {
+        const check = row.querySelector('.my-module-item-check');
+        if (!check.checked) return;
+        const input = row.querySelector('.my-module-item-amount');
+        const qty = Math.max(0, Math.floor(Number(input.value) || 0));
+        if (qty <= 0) return;
+        const weight = Number(row.dataset.weight) || 1;
+        const entry = { itemId: input.dataset.itemId, qty, weight };
+        if (input.dataset.kind === 'food') foodConsumed.push(entry);
+        else waterConsumed.push(entry);
+      });
+
+      if (!foodConsumed.length && !waterConsumed.length) {
         actor.unsetFlag(MODULE_ID, 'pendingConsumption');
-      } else {
-        actor.setFlag(MODULE_ID, 'pendingConsumption', { ...data, reqFood, reqWater });
+        return;
       }
-      return data;
+
+      actor.setFlag(MODULE_ID, 'pendingConsumption', {
+        foodConsumed, waterConsumed,
+        ate: foodConsumed.length > 0,
+        drank: waterConsumed.length > 0,
+        reqFood, reqWater
+      });
     };
 
-    // --- подтверждение отдыха ---
-    // Перехватываем submit формы и клик по кнопке отправки ДО системного обработчика.
-    // Здесь мы вычисляем итоговый текст для чата и сохраняем флаг для createChatMessage.
-
-    // --- live-обновление UI ---
-    section.addEventListener('change', () => { recompute(); savePending(); });
-    section.addEventListener('input',  () => { recompute(); savePending(); });
+    section.addEventListener('change', () => { recompute(); saveData(); });
+    section.addEventListener('input',  () => { recompute(); saveData(); });
+    root.querySelectorAll('button[type="submit"], button[data-action="rest"]').forEach(btn => {
+      btn.addEventListener('click', () => { recompute(); saveData(); }, { capture: true });
+    });
+    form.addEventListener('submit', saveData, { capture: true });
   });
 }
 

@@ -1,4 +1,3 @@
-// scripts/hooks/chat-message.mjs
 import { MODULE_ID } from '../constants.mjs';
 import { restNoteStore } from './rest-handler.mjs';
 import { buildRestNote } from '../helpers/consumption.mjs';

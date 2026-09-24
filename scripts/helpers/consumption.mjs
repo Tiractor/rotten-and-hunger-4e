@@ -1,12 +1,5 @@
-// scripts/helpers/consumption.mjs
 import { MODULE_ID } from '../constants.mjs';
 
-/**
- * Считает итоговые дни без еды/воды и формирует текст для чата.
- * @param {Actor} actor
- * @param {Object|null} consumption — pendingConsumption из флага
- * @returns {{text:string, critical:boolean, daysWithoutFood:number, daysWithoutWater:number, maxFood:number, maxWater:number, at:number}}
- */
 export function buildRestNote(actor, consumption) {
   const prevFood  = actor.getFlag(MODULE_ID, 'daysWithoutFood')  || 0;
   const prevWater = actor.getFlag(MODULE_ID, 'daysWithoutWater') || 0;
@@ -22,25 +15,27 @@ export function buildRestNote(actor, consumption) {
   const maxFood  = Number(req.daysWithoutFood)  || 3;
   const maxWater = Number(req.daysWithoutWater) || 2;
 
+  const i18n = game.i18n;
   let text;
   if (ate && drank) {
-    text = 'Персонаж сегодня поел и напился.';
+    text = i18n.localize('ROTTEN_HUNGER.Chat.AteAndDrank');
   } else if (ate && !drank) {
-    text = `Персонаж поел и ${daysWithoutWater} дней без воды.`;
+    text = i18n.format('ROTTEN_HUNGER.Chat.AteNoWater', { days: daysWithoutWater });
   } else if (!ate && drank) {
-    text = `Персонаж ${daysWithoutFood} дней без еды и напился.`;
+    text = i18n.format('ROTTEN_HUNGER.Chat.NoFoodDrank', { days: daysWithoutFood });
   } else {
-    text = `Персонаж ${daysWithoutFood} дней без еды и ${daysWithoutWater} дней без воды.`;
+    text = i18n.format('ROTTEN_HUNGER.Chat.NoFoodNoWater', {
+      daysFood: daysWithoutFood,
+      daysWater: daysWithoutWater
+    });
   }
 
-  const critical = ((daysWithoutFood >= maxFood) || (daysWithoutWater >= maxWater));
+  const critical = daysWithoutFood > maxFood || daysWithoutWater > maxWater;
+
   return {
-    text,
-    critical,
-    daysWithoutFood,
-    daysWithoutWater,
-    maxFood,
-    maxWater,
+    text, critical,
+    daysWithoutFood, daysWithoutWater,
+    maxFood, maxWater,
     at: Date.now()
   };
 }

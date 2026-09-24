@@ -1,4 +1,3 @@
-// scripts/hooks/long-rest-hook.mjs
 import { MODULE_ID } from '../constants.mjs';
 
 export function installLongRestPatch() {

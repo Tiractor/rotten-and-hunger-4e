@@ -1,4 +1,3 @@
-// scripts/hooks/rest-handler.mjs
 import { MODULE_ID, FLAGS } from '../constants.mjs';
 import { processExpiration } from '../helpers/expiration.mjs';
 import { buildRestNote } from '../helpers/consumption.mjs';

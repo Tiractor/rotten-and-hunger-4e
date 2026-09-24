@@ -1,4 +1,3 @@
-// scripts/constants.mjs
 export const MODULE_ID = 'rotten-and-hunger-4e';
 
 export const FLAGS = {

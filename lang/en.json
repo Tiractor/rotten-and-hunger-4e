@@ -1,26 +1,80 @@
 {
-  "food-water-tracker": {
-    "consumableTypes": {
+  "ROTTEN_HUNGER": {
+    "ConsumableTypes": {
       "drink": "Drink"
     },
-    "settings": {
-      "sizeRequirements": {
-        "name": "Size Requirements",
-        "hint": "Set food and water needs, and days without them, for each size."
+
+    "Settings": {
+      "SizeRequirements": {
+        "Name": "Size Requirements",
+        "Hint": "Set food and water needs, and days without them, for each creature size."
       },
-      "spoiledFoodItem": {
-        "name": "Spoiled Food Item",
-        "hint": "Item that food turns into after expiration."
+      "SpoiledFood": {
+        "Name": "Spoiled Food Item",
+        "Hint": "Item that food turns into after expiration."
       },
-      "spoiledDrinkItem": {
-        "name": "Spoiled Drink Item",
-        "hint": "Item that drink turns into after expiration."
+      "SpoiledDrink": {
+        "Name": "Spoiled Drink Item",
+        "Hint": "Item that drink turns into after expiration."
       },
-      "sizeRequirementsMenu": {
-        "name": "Size Requirements",
-        "label": "Configure",
-        "hint": "Configure food and water consumption for each creature size."
+      "Menu": {
+        "Name": "Food & Water Settings",
+        "Label": "Configure",
+        "Hint": "Size requirements and spoilage replacement items."
       }
+    },
+
+    "Config": {
+      "WindowTitle": "Food & Water Settings",
+      "SizesLegend": "Size Requirements",
+      "SpoiledLegend": "Spoilage Replacement Items",
+      "Table": {
+        "Size": "Size",
+        "Food": "Food (lb)",
+        "Water": "Water (lb)",
+        "DaysWithoutFood": "Days w/o Food",
+        "DaysWithoutWater": "Days w/o Water"
+      },
+      "Spoiled": {
+        "Food": "Spoiled Food",
+        "Drink": "Spoiled Drink"
+      },
+      "NoReplacement": "— Do not replace (delete) —",
+      "Save": "Save",
+      "SavedNotification": "Settings saved.",
+      "Sizes": {
+        "tiny": "Tiny",
+        "sm": "Small",
+        "med": "Medium",
+        "lg": "Large",
+        "huge": "Huge",
+        "garg": "Gargantuan"
+      }
+    },
+
+    "Item": {
+      "Expiration": "Shelf life (days)"
+    },
+
+    "Rest": {
+      "SectionTitle": "Food & Water",
+      "Food": "Food",
+      "Water": "Water",
+      "Required": "required",
+      "Selected": "Selected",
+      "PoundsAbbr": "lb",
+      "PiecesAbbr": "pc",
+      "NoFood": "No food in inventory",
+      "NoDrinks": "No drinks in inventory",
+      "DoNotEat": "— Do not eat —",
+      "DoNotDrink": "— Do not drink —"
+    },
+
+    "Chat": {
+      "AteAndDrank": "The character ate and drank today.",
+      "AteNoWater": "The character ate and has been {days} days without water.",
+      "NoFoodDrank": "The character has been {days} days without food and drank.",
+      "NoFoodNoWater": "The character has been {daysFood} days without food and {daysWater} days without water."
     }
   }
 }

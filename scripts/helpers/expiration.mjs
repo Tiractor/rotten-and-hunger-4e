@@ -1,4 +1,3 @@
-// scripts/helpers/expiration.mjs
 import { MODULE_ID, FLAGS, CONSUMABLE_TYPES } from '../constants.mjs';
 
 export async function processExpiration(actor) {
@@ -25,13 +24,17 @@ export async function processExpiration(actor) {
       const template = templateId ? game.items.get(templateId) : null;
 
       const currentQty = Number(item.system.quantity) || 1;
-      const newQty = 0;
+      const newQty = Math.max(0, currentQty - 1);
 
-      await actor.deleteEmbeddedDocuments('Item', [item.id]);
+      if (newQty <= 0) {
+        await actor.deleteEmbeddedDocuments('Item', [item.id]);
+      } else {
+        await item.update({ 'system.quantity': newQty });
+      }
 
       if (template) {
         const data = template.toObject();
-        data.system = foundry.utils.mergeObject(data.system ?? {}, { quantity: currentQty }, { inplace: false });
+        data.system = foundry.utils.mergeObject(data.system ?? {}, { quantity: 1 }, { inplace: false });
         delete data._id;
         await actor.createEmbeddedDocuments('Item', [data]);
       }
