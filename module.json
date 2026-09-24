@@ -26,7 +26,7 @@
     { "lang": "en", "name": "English", "path": "lang/en.json" },
     { "lang": "ru", "name": "Русский", "path": "lang/ru.json" }
   ],
-  "url": "https://your-repo-url",
-  "manifest": "https://your-repo-url/module.json",
-  "download": "https://your-repo-url/download.zip"
+  "url": "https://github.com/Tiractor/rotten-and-hunger-4e/",
+  "manifest": "https://github.com/Tiractor/rotten-and-hunger-4e/module.json",
+  "download": "https://github.com/Tiractor/rotten-and-hunger-4e/download.zip"
 }
