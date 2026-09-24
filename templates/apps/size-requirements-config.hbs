@@ -1,0 +1,51 @@
+<div class="size-requirements-body">
+  <fieldset>
+    <legend>Потребности по размерам</legend>
+    <table>
+      <thead>
+        <tr>
+          <th>Размер</th>
+          <th>Еда (ф)</th>
+          <th>Вода (ф)</th>
+          <th>Дней без еды</th>
+          <th>Дней без воды</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each sizes}}
+          <tr>
+            <td>{{this.label}}</td>
+            <td><input type="number" name="{{this.key}}.food" value="{{this.food}}" min="0" step="0.1"></td>
+            <td><input type="number" name="{{this.key}}.water" value="{{this.water}}" min="0" step="0.1"></td>
+            <td><input type="number" name="{{this.key}}.daysWithoutFood" value="{{this.daysWithoutFood}}" min="0"></td>
+            <td><input type="number" name="{{this.key}}.daysWithoutWater" value="{{this.daysWithoutWater}}" min="0"></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </fieldset>
+    <fieldset>
+    <legend>Предметы-замены при порче</legend>
+    <div class="form-group">
+      <label>Испорченная еда</label>
+      <select name="spoiledFoodItem">
+        <option value="">— Не заменять (удалять) —</option>
+        {{#each worldItems}}
+          <option value="{{this.id}}" {{#if this.selectedFood}}selected{{/if}}>{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Испорченный напиток</label>
+      <select name="spoiledDrinkItem">
+        <option value="">— Не заменять (удалять) —</option>
+        {{#each worldItems}}
+          <option value="{{this.id}}" {{#if this.selectedDrink}}selected{{/if}}>{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </fieldset>
+    <footer class="form-footer">
+    <button type="submit"><i class="fas fa-save"></i> Сохранить</button>
+  </footer>
+</div>

@@ -1,0 +1,6 @@
+{{! templates/partials/item-expiration.hbs }}
+<div class="form-group my-module-expiration">
+  <label>Срок годности (дней)</label>
+  <input type="number" name="flags.food-water-tracker.expiration"
+         value="{{expiration}}" min="0" step="1" {{#unless isEditable}}disabled{{/unless}}>
+</div>

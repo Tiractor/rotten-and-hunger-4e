@@ -1,0 +1,24 @@
+{{! templates/partials/long-rest-section.hbs }}
+<div class="my-module-rest-section">
+  <h3>Питание и вода</h3>
+  <div class="form-group">
+    <label>Еда (требуется: {{requirements.food}})</label>
+    <select name="my-module.foodItem">
+      <option value="">— Не есть —</option>
+      {{#each foodItems}}
+        <option value="{{this.id}}">{{this.name}} ({{this.system.quantity}})</option>
+      {{/each}}
+    </select>
+    <input type="number" name="my-module.foodQty" value="0" min="0" max="{{requirements.food}}">
+  </div>
+  <div class="form-group">
+    <label>Вода (требуется: {{requirements.water}})</label>
+    <select name="my-module.waterItem">
+      <option value="">— Не пить —</option>
+      {{#each drinkItems}}
+        <option value="{{this.id}}">{{this.name}} ({{this.system.quantity}})</option>
+      {{/each}}
+    </select>
+    <input type="number" name="my-module.waterQty" value="0" min="0" max="{{requirements.water}}">
+  </div>
+</div>

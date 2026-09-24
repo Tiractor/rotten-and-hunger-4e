@@ -1,0 +1,32 @@
+{
+  "id": "rotten-and-hunger-4e",
+  "title": "Rotten and Hunger DnD4e",
+  "description": "Модуль для отслежвания голода и жажды в DnD4e",
+  "authors": [
+        {
+            "name": "Tiractor",
+            "discord": "velestiractor",
+            "flags": {}
+        }
+    ],
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "relationships": {
+    "systems": [{
+      "id": "dnd4e",
+      "type": "system"
+    }]
+  },
+  "esmodules": ["scripts/main.mjs"],
+  "styles": ["styles/main.css"],
+  "languages": [
+    { "lang": "en", "name": "English", "path": "lang/en.json" },
+    { "lang": "ru", "name": "Русский", "path": "lang/ru.json" }
+  ],
+  "url": "https://your-repo-url",
+  "manifest": "https://your-repo-url/module.json",
+  "download": "https://your-repo-url/download.zip"
+}

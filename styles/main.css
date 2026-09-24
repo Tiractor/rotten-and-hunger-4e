@@ -1,0 +1,47 @@
+.my-module-rest-section {
+  margin-top: 10px;
+  border-top: 1px solid var(--color-border-light-primary, #ccc);
+  padding-top: 10px;
+}
+.my-module-rest-section h3 { margin: 0 0 8px; font-size: 1.1em; }
+
+.my-module-block { margin-bottom: 12px; }
+.my-module-block-header {
+  padding: 4px 6px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  margin-bottom: 4px;
+  font-size: 0.95em;
+}
+.my-module-item-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 30px 80px;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 4px;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+}
+.my-module-item-row label {
+  display: flex; align-items: center; gap: 6px; cursor: pointer;
+}
+.my-module-item-avail { color: #666; font-size: 0.85em; margin-left: 6px; }
+.my-module-item-amount { width: 55px; }
+.my-module-item-amount:disabled { opacity: 0.4; }
+.my-module-item-unit { font-size: 0.85em; color: #666; }
+.my-module-item-subtotal { font-size: 0.85em; text-align: right; color: #333; }
+.my-module-rest-note { margin-top: 4px; font-style: italic; color: #555; }
+.my-module-rest-note-critical {
+  color: #b00020 !important;
+  font-weight: 700;
+  font-style: normal;
+  border-left: 3px solid #b00020;
+  padding-left: 6px;
+}
+
+#size-requirements-config fieldset { margin-bottom: 10px; }
+#size-requirements-config table { width: 100%; border-collapse: collapse; }
+#size-requirements-config th,
+#size-requirements-config td { border: 1px solid #ccc; padding: 4px; text-align: center; }
+#size-requirements-config input[type="number"] { width: 70px; }
+#size-requirements-config .form-group { display: flex; gap: 8px; align-items: center; margin: 4px 0; }
+#size-requirements-config .form-group select { flex: 1; }

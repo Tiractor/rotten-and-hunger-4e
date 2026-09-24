@@ -1,0 +1,26 @@
+{
+  "food-water-tracker": {
+    "consumableTypes": {
+      "drink": "Drink"
+    },
+    "settings": {
+      "sizeRequirements": {
+        "name": "Size Requirements",
+        "hint": "Set food and water needs, and days without them, for each size."
+      },
+      "spoiledFoodItem": {
+        "name": "Spoiled Food Item",
+        "hint": "Item that food turns into after expiration."
+      },
+      "spoiledDrinkItem": {
+        "name": "Spoiled Drink Item",
+        "hint": "Item that drink turns into after expiration."
+      },
+      "sizeRequirementsMenu": {
+        "name": "Size Requirements",
+        "label": "Configure",
+        "hint": "Configure food and water consumption for each creature size."
+      }
+    }
+  }
+}
